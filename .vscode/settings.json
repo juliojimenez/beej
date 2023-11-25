@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "netdb.h": "c",
+        "stdio.h": "c"
+    }
+}
