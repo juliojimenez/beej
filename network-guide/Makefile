@@ -17,3 +17,4 @@ clean:
 	rm -f server
 	rm -f client
 	rm -f listener
+	rm -rf *.dSYM
