@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 showip
+server
 
 # Debug files
 *.dSYM/
