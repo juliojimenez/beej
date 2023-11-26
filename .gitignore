@@ -35,9 +35,7 @@
 *.i*86
 *.x86_64
 *.hex
-client
-showip
-server
+bin
 
 # Debug files
 *.dSYM/
