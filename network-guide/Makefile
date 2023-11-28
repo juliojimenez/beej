@@ -1,4 +1,4 @@
-all: showip server client listener talker poll
+all: showip server client listener talker poll pollserver
 
 showip: showip.c
 	mkdir -p bin
@@ -23,6 +23,10 @@ talker: talker.c
 poll: poll.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g poll.c -o bin/poll
+
+pollserver: pollserver.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g pollserver.c -o bin/pollserver
 
 clean:
 	rm -rf bin
