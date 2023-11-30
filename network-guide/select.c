@@ -10,5 +10,6 @@
 #define STDIN 0	// file descriptor for standard input
 
 int main (void) {
-
+    struct timeval tv;
+    fd_set readfds;
 }
