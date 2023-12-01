@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types
+all: hello variable-types boolean-types do-while
 
 hello: hello.c
 	mkdir -p bin
@@ -12,5 +12,10 @@ boolean-types: boolean-types.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g boolean-types.c -o bin/boolean-types
 
+do-while: do-while.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g do-while.c -o bin/do-while
+
 clean:
 	rm -rf bin
+
