@@ -46,7 +46,7 @@ int main(void) {
     FD_ZERO(&read_fds);
 
     // get us a socket and bind it
-    memset(&hints, 0 hints);
+    memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
@@ -99,7 +99,7 @@ int main(void) {
 
         // run through the existing connections looking for data to read
         for (i = 0; i <= fdmax; i++) {
-            if (FD_SET(i, &read_fds)) { // we got one
+            if (FD_ISSET(i, &read_fds)) { // we got one
                 if (i == listener) {
                     // handle new connections
                     addrlen = sizeof remoteaddr;
@@ -128,15 +128,15 @@ int main(void) {
                             // connection closed
                             printf("selectserver: socket %d hung up\n", i);
                         } else {
-                            perror("recv";
+                            perror("recv");
                         }
                         close(i);   // bye!!
                         FD_CLR(i, &master); // remove from master set
                     } else {
                         // we got some data from a client
-                        for (j = 0, j <= fdmax; j++) {
+                        for (j = 0; j <= fdmax; j++) {
                             // send to everyone
-                            if (FD_SET(j, &master)) {
+                            if (FD_ISSET(j, &master)) {
                                 // except the listener and ourselves
                                 if (j != listener && j != i) {
                                     if (send(j, buf, nbytes, 0) == -1) {
