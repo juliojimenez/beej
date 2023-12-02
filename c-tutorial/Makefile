@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while
+all: hello variable-types boolean-types do-while switch
 
 hello: hello.c
 	mkdir -p bin
@@ -15,6 +15,10 @@ boolean-types: boolean-types.c
 do-while: do-while.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g do-while.c -o bin/do-while
+
+switch: switch.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g switch.c -o bin/switch
 
 clean:
 	rm -rf bin
