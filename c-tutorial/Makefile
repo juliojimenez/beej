@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while switch function function-void
+all: hello variable-types boolean-types do-while switch function function-void passing-by-value
 
 hello: hello.c
 	mkdir -p bin
@@ -27,6 +27,10 @@ function: function.c
 function-void: function-void.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g function-void.c -o bin/function-void
+
+passing-by-value: passing-by-value.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g passing-by-value.c -o bin/passing-by-value
 
 clean:
 	rm -rf bin
