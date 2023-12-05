@@ -14,7 +14,7 @@
 #define unpack754_64(i) (unpack754((i), 64, 11))
 
 // pack754() - pack a floating point number into IEEE-754 format
-uint64_t pack754(long double f, unsigned bits, unsigned expbits) {
+unsigned long long int pack754(long double f, unsigned bits, unsigned expbits) {
     long double fnorm;
     int shift;
     long long sign, exp, significand;
@@ -35,7 +35,7 @@ uint64_t pack754(long double f, unsigned bits, unsigned expbits) {
     significand = fnorm * ((1LL<<significandbits) + 0.5f);
 
     // get the biased exponent
-    exp = shift + ((1<<(expbits-1)) - 1);    // shift + bias
+    exp = shift + ((1<<(expbits - 1)) - 1);    // shift + bias
 
     // return the final answer
     return (sign<<(bits - 1)) | (exp<<(bits - expbits - 1)) | significand;
