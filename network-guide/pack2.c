@@ -41,7 +41,8 @@ unsigned long long int pack754(long double f, unsigned bits, unsigned expbits) {
     return (sign<<(bits - 1)) | (exp<<(bits - expbits - 1)) | significand;
 }
 
-long double unpack754(uint64_t i, unsigned bits, unsigned expbits) {
+// unpack754() - unpack a floating point number from IEEE-754 format
+long double unpack754(unsigned long long int i, unsigned bits, unsigned expbits) {
     long double result;
     long long shift;
     unsigned bias;
@@ -64,6 +65,11 @@ long double unpack754(uint64_t i, unsigned bits, unsigned expbits) {
     result *= (i>>(bits - 1))&1 ? -1.0 : 1.0;
 
     return result;
+}
+
+// packi16 - store a 16-bit int into a char buffer (like htons())
+void packi16(unsigned char *buf, unsigned int i) {
+    *buf++ = i>>8; *buf++ = i;
 }
 
 int main(void) {
