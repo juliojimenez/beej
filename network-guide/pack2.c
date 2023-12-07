@@ -157,6 +157,18 @@ unsigned long long int unpacku64(unsigned char *buf) {
            buf[7];
 }
 
+// pack() - store data dictated by the format string in the buffer
+//   bits |signed   unsigned   float   string
+//   -----+----------------------------------
+//      8 |   c        C
+//     16 |   h        H         f
+//     32 |   l        L         d
+//     64 |   q        Q         g
+//      - |                               s
+unsigned int pack(unsigned char *buf, char *format, ...) {
+
+}
+
 int main(void) {
     float f = 3.1415926, f2;
     double d = 3.14159265358979323, d2;
