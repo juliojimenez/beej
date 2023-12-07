@@ -166,7 +166,114 @@ unsigned long long int unpacku64(unsigned char *buf) {
 //     64 |   q        Q         g
 //      - |                               s
 unsigned int pack(unsigned char *buf, char *format, ...) {
+    va_list ap;
 
+    signed char c;            // 8-bit
+    unsigned char C;
+    
+    int h;                    // 16-bit
+    unsigned int H;
+
+    long int l;               // 32-bit
+    unsigned long int L;
+
+    long long int q;          // 64-bit
+    unsigned long long int Q;
+
+    float f;                  // floats
+    double d;
+    long double g;
+    unsigned long long int fhold;
+
+    char *s;                  // strings
+    unsigned int len;
+
+    unsigned int size = 0;
+
+    va_start(ap, format);
+
+    for (; *format != '\0'; format++) {
+        switch (*format) {
+            case 'c': // 8-bit
+                size += 1;
+                c = (signed char)va_arg(ap, int);    // promoted
+                *buf++ = c;
+                break;
+            case 'C': // 8-bit unsigned
+                size += 1;
+                C = (unsigned char)va_arg(ap, unsigned int);    // promoted
+                *buf++ = C;
+                break;
+            case 'h': // 16-bit
+                size += 2;
+                h = va_arg(ap, int);
+                packi16(buf, h);
+                buf += 2;
+                break;
+            case 'H': // 16-bit unsigned
+                size += 2;
+                H = va_arg(ap, unsigned int);
+                packi16(buf, H);
+                buf += 2;
+                break;
+            case 'l': // 32-bit
+                size += 4;
+                l = va_arg(ap, long int);
+                packi32(buf, l);
+                buf += 4;
+                break;
+            case 'L': // 32-bit unsigned
+                size += 4;
+                L = va_arg(ap, unsigned long int);
+                packi32(buf, L);
+                buf += 4;
+                break;
+            case 'q': // 64-bit
+                size += 8;
+                q = va_arg(ap, long long int);
+                packi64(buf, q);
+                buf += 8;
+                break;
+            case 'Q': // 64-bit unsigned
+                size += 8;
+                Q = va_arg(ap, unsigned long long int);
+                packi64(buf, Q);
+                buf += 8;
+                break;
+            case 'f': // float-16
+                size += 2;
+                f = (float)va_arg(ap, double);    // promoted
+                fhold = pack754_16(f);   // convert to IEEE-754
+                packi16(buf, fhold);
+                buf += 2;
+                break;
+            case 'd': // float-32
+                size += 4;
+                d = va_arg(ap, double);
+                fhold = pack754_32(d);    // convert to IEEE-754
+                packi32(buf, fhold);
+                buf += 4;
+                break;
+            case 'g': // float-64
+                size += 8;
+                g = va_arg(ap, long double);
+                fhold = pack754_64(g);    // convert to IEEE-754
+                packi64(buf, fhold);
+                buf += 8;
+                break;
+            case 's': // string
+                s = va_arg(ap, char*);
+                len = strlen(s);
+                size += len + 2;
+                packi16(buf, len);
+                buf += 2;
+                memcpy(buf, s, len);
+                buf += len;
+                break;
+        }
+    }
+    va_end(ap);
+    return size;
 }
 
 int main(void) {
