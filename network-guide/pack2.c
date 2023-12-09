@@ -9,7 +9,7 @@
 #define pack754_16(f) (pack754((f), 16, 5))
 #define pack754_32(f) (pack754((f), 32, 8))
 #define pack754_64(f) (pack754((f), 64, 11))
-#define unpack754_16(f) (unpack754((i), 16, 5))
+#define unpack754_16(i) (unpack754((i), 16, 5))
 #define unpack754_32(i) (unpack754((i), 32, 8))
 #define unpack754_64(i) (unpack754((i), 64, 11))
 
@@ -345,12 +345,12 @@ void unpack(unsigned char *buf, char *format, ...) {
                 break;
             case 'q': // 64-bit
                 q = va_arg(ap, long long int*);
-                q* = unpacki64(buf);
+                *q = unpacki64(buf);
                 buf += 8;
                 break;
             case 'Q': // 64-bit unsigned
                 Q = va_arg(ap, unsigned long long int*);
-                Q* = unpacku64(buf);
+                *Q = unpacku64(buf);
                 buf += 8;
                 break;
             case 'f': // float
@@ -390,25 +390,148 @@ void unpack(unsigned char *buf, char *format, ...) {
     va_end(ap);
 }
 
+//#define DEBUG
+#ifdef DEBUG
+#include <limits.h>
+#include <floats.h>
+#include <assert.h>
+#endif
+
 int main(void) {
-    float f = 3.1415926, f2;
-    double d = 3.14159265358979323, d2;
-    uint32_t fi;
-    uint64_t di;
+#ifndef DEBUG
+    unsigned char buf[1024];
+    unsigned char magic;
+    int monkeycount;
+    long altitude;
+    double absurdityfactor;
+    char *s = "Great unmitigated Zot! You've found the Runestaff!";
+    char s2[96];
+    unsigned int packetsize, ps2;
 
-    fi = pack754_32(f);
-    f2 = unpack754_32(fi);
+    packetsize = pack(buf, "CHhlsd", 'B', 0, 37, -5, s, -3490.5);
+    packi16(buf + 1, packetsize);    // store packet size in packet for kicks
+                                     //
+    printf("packet is %u bytes\n", packetsize);
 
-    di = pack754_64(d);
-    d2 = unpack754_64(di);
+    unpack(buf, "CHhl96sd", &magic, &ps2, &monkeycount, &altitude, s2, &absurdityfactor);
 
-    printf("float before   : %.7f\n", f);
-    printf("float encoded  : 0x%08" PRIx32 "\n", fi);
-    printf("float after    : %.7f\n", f2);
+    printf("'%c' %hhu %u %ld \"%s\" %f\n", magic, ps2, monkeycount, altitude, s2, absurdityfactor);
+#else
+    unsigned char buf[1024];
+    
+    int x;
 
-    printf("double before  : %.20lf\n", d);
-    printf("double encoded : 0x%016" PRIx64 "\n", di);
-    printf("double after   : %.20lf\n", d2);
+    long long k, k2;
+    long long test64[14] = {
+        0,
+        -0,
+        1,
+        2,
+        -1,
+        -2,
+        0x7fffffffffffffffll>>1,
+        0x7ffffffffffffffell,
+        0x7fffffffffffffffll,
+        -0x7fffffffffffffffll,
+        -0x8000000000000000,
+        9007199254740991ll,
+        9007199254740992ll,
+        9007199254740993ll
+    };
 
+    unsigned long long K, K2;
+    unsigned long long testu64[14] = {
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0xffffffffffffffffll>>1,
+        0xfffffffffffffffell,
+        0xffffffffffffffffll,
+        0,
+        0,
+        9007199254740991ll,
+        9007199254740992ll,
+        9007199254740993ll
+    };
+
+    long i, i2;
+    long test32[14] = {
+        0,
+        -0,
+        1,
+        2,
+        -1,
+        -2,
+        0x7fffffffl>>1,
+        0x7ffffffel,
+        0x7fffffffl,
+        -0x7fffffffl,
+        -0x80000000l,
+        0,
+        0,
+        0
+    };
+
+    unsigned long I, I2;
+    unsigned long testu32[14] = {
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0xffffffffl>>1,
+        0xfffffffel,
+        0xffffffffl,
+        0,
+        0,
+        0,
+        0,
+        0
+    };
+
+    int j, j2;
+    int test16[14] = {
+        0,
+        -0,
+        1,
+        2,
+        -1,
+        -2,
+        0x7fff>>1,
+        0x7ffe,
+        0x7fff,
+        -0x7fff,
+        -0x8000,
+        0,
+        0,
+        0
+    };
+
+    printf("       char bytes : %zu\n", sizeof(char));
+    printf("        int bytes : %zu\n", sizeof(int));
+    printf("       long bytes : %zu\n", sizeof(long));
+    printf("  long long bytes : %zu\n", sizeof(long long));
+    printf("      float bytes : %zu\n", sizeof(float));
+    printf("     double bytes : %zu\n", sizeof(double));
+    printf("long double bytes : %zu\n", sizeof(long double));
+    
+    for (x = 0; x < 14; x++) {
+        k = test64[x];
+        pack(buf, "q", k);
+        unpack(buf, "q", &k2);
+
+        if (k2 != k) {
+            printf("64: %lld != %lld\n", k, k2);
+            printf("before: %016llx\n", k);
+            printf("after: %016llx\n", k2);
+            printf("buffer: %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+        } else {
+            printf("64: OK: %lld == %lld\n", k, k2);
+        }
+    }
     return 0;
 }
