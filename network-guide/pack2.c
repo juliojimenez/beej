@@ -390,10 +390,10 @@ void unpack(unsigned char *buf, char *format, ...) {
     va_end(ap);
 }
 
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #include <limits.h>
-#include <floats.h>
+#include <float.h>
 #include <assert.h>
 #endif
 
@@ -526,12 +526,116 @@ int main(void) {
 
         if (k2 != k) {
             printf("64: %lld != %lld\n", k, k2);
-            printf("before: %016llx\n", k);
-            printf("after: %016llx\n", k2);
-            printf("buffer: %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+            printf("  before : %016llx\n", k);
+            printf("  after  : %016llx\n", k2);
+            printf("  buffer : %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
         } else {
             printf("64: OK: %lld == %lld\n", k, k2);
         }
+
+        K = testu64[x];
+        pack(buf, "Q", K);
+        unpack(buf, "Q", &K);
+
+        if (K2 != K) {
+            printf("64: %llu != %llu\n", K, K2);
+        } else {
+            printf("64: OK: %llu == %llu\n", K, K2);
+        }
+
+        i = test32[x];
+        pack(buf, "l", i);
+        unpack(buf, "l", &i2);
+
+        if (i2 != i) {
+            printf("32(%d): %ld != %ld\n", x, i, i2);
+            printf("  before : %08lx\n", i);
+            printf("  after  : %08lx\n", i2);
+            printf("  buffer : %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+        } else {
+            printf("32(%d): OK: %ld ==  %ld\n", x, i, i2);
+        }
+
+        I = testu32[x];
+        pack(buf, "L", I);
+        unpack(buf, "L", &I2);
+
+        if (I2 != I) {
+            printf("32(%d): %lu != %lu\n", x, I, I2);
+        } else {
+            printf("32(%d): OK: %lu == %lu\n", x, I, I2);
+        }
+
+        j = test16[x];
+        pack(buf, "h", j);
+        unpack(buf, "h", &j2);
+
+        if (j2 != j) {
+            printf("16(%d): %d != %d\n", x, j, j2);
+        } else {
+            printf("16(%d): OK: %d == %d\n", x, j, j2);
+        }
     }
+
+    if (1) {
+        long double testf64[8] = { -3490.6677, 0.0, 1.0, -1.0, DBL_MIN * 2, DBL_MAX / 2, DBL_MIN, DBL_MAX };
+        long double f, f2;
+
+        for (i = 0; i < 7; i++) {
+            f = testf64[i];
+            pack(buf, "g", f);
+            unpack(buf, "g", &f2);
+
+            if (f2 != f) {
+                printf("f64(%d): %Lf != %Lf\n", i, f, f2);
+                printf("  before : %016llx\n", *((long long*)&f));
+                printf("  after  : %016llx\n", *((long long*)&f2));
+                printf("  buffer : %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+            } else {
+                printf("f64(%d): OK: %Lf == %Lf\n", i, f, f2);
+            }
+        }
+    }
+
+    if (1) {
+        double testf32[8] = { 0.0, 1.0, -1.0, 10, -3.6677, 3.1875, -3.1875 };
+        double f, f2;
+
+        for (i = 0; i < 7; i++) {
+            f = testf32[i];
+            pack(buf, "d", f);
+            unpack(buf, "d", &f2);
+
+            if (f2 != f) {
+                printf("f32(%d): %.10f != %.10f\n", i, f, f2);
+                printf("  before : %016llx\n", *((long long*)&f));
+                printf("  after  : %016llx\n", *((long long*)&f2));
+                printf("  buffer : %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+            } else {
+                printf("f32(%d): OK: %.10f == %.10f\n", i, f, f2);
+            }
+        }
+    }
+
+    if (1) {
+        float testf16[7] = { 0.0, 1.0, -1.0, 10, -10, 3.1875, -3.187 };
+        float f, f2;
+
+        for (i = 0; i < 7; i++) {
+            f = testf16[i];
+            pack(buf, "f", f);
+            unpack(buf, "f", &f2);
+
+            if (f2 != f) {
+                printf("f16(%d): %f != %f\n", i, f, f2);
+                printf("  before : %08x\n", *((int*)&f));
+                printf("  after  : %08x\n", *((int*)&f2));
+                printf("  buffer : %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx %02hhx\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+            } else {
+                printf("f16(%d): OK: %f == %f\n", i, f, f2);
+            }
+        }
+    }
+#endif
     return 0;
 }
