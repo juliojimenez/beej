@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address
+all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing
 
 hello: hello.c
 	mkdir -p bin
@@ -39,6 +39,10 @@ function-prototypes: function-prototypes.c
 address: address.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g address.c -o bin/address
+
+dereferencing: dereferencing.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g dereferencing.c -o bin/dereferencing
 
 clean:
 	rm -rf bin
