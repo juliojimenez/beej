@@ -1,4 +1,4 @@
-all: showip server client listener talker poll pollserver select selectserver broadcaster pack ieee754 pack2
+all: showip server client listener talker poll pollserver select selectserver broadcaster pack ieee754 pack2 pcap
 
 showip: showip.c
 	mkdir -p bin
@@ -51,6 +51,10 @@ ieee754: ieee754.c
 pack2: pack2.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g pack2.c -o bin/pack2
+
+pcap: pcap.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g pcap.c -o bin/pcap
 
 clean:
 	rm -rf bin
