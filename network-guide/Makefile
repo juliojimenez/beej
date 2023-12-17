@@ -54,7 +54,7 @@ pack2: pack2.c
 
 pcap: pcap.c
 	mkdir -p bin
-	clang -fcolor-diagnostics -fansi-escape-codes -g pcap.c -o bin/pcap
+	clang -fcolor-diagnostics -fansi-escape-codes -g pcap.c -lpcap -o bin/pcap
 
 clean:
 	rm -rf bin
