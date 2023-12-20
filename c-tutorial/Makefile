@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays
+all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays array-initializers
 
 hello: hello.c
 	mkdir -p bin
@@ -51,6 +51,10 @@ pass-pointer-as-arg: pass-pointer-as-arg.c
 arrays: arrays.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g arrays.c -o bin/arrays
+
+array-initializers: array-initializers.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g array-initializers.c -o bin/array-initializers
 
 clean:
 	rm -rf bin
