@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays array-initializers
+all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays array-initializers out-of-bounds multidimensional
 
 hello: hello.c
 	mkdir -p bin
@@ -55,6 +55,14 @@ arrays: arrays.c
 array-initializers: array-initializers.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g array-initializers.c -o bin/array-initializers
+
+out-of-bounds: out-of-bounds.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g out-of-bounds.c -o bin/out-of-bounds
+
+multidimensional: multidimensional.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g multidimensional.c -o bin/multidimensional
 
 clean:
 	rm -rf bin
