@@ -1,4 +1,4 @@
-all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays array-initializers out-of-bounds multidimensional
+all: hello variable-types boolean-types do-while switch function function-void passing-by-value function-prototypes address dereferencing pass-pointer-as-arg arrays array-initializers out-of-bounds multidimensional pointer-to-array
 
 hello: hello.c
 	mkdir -p bin
@@ -63,6 +63,10 @@ out-of-bounds: out-of-bounds.c
 multidimensional: multidimensional.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g multidimensional.c -o bin/multidimensional
+
+pointer-to-array: pointer-to-array.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g pointer-to-array.c -o bin/pointer-to-array
 
 clean:
 	rm -rf bin
