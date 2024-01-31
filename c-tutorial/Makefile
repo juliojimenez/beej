@@ -15,7 +15,8 @@ all: hello \
 	 multidimensional \
 	 pointer-to-array \
 	 pass-single-dim-array-to-func \
-     changing-arrays-in-functions
+     changing-arrays-in-functions \
+     pass-multi-dim-array-to-func
 
 hello: hello.c
 	mkdir -p bin
@@ -92,6 +93,10 @@ pass-single-dim-array-to-func: pass-single-dim-array-to-func.c
 changing-arrays-in-functions: changing-arrays-in-functions.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g changing-arrays-in-functions.c -o bin/changing-arrays-in-functions
+
+pass-multi-dim-array-to-func: pass-multi-dim-array-to-func.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g pass-multi-dim-array-to-func.c -o bin/pass-multi-dim-array-to-func
 
 clean:
 	rm -rf bin
