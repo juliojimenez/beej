@@ -17,7 +17,8 @@ all: hello \
 	 pass-single-dim-array-to-func \
      changing-arrays-in-functions \
      pass-multi-dim-array-to-func \
-     string-variables-as-arrays
+     string-variables-as-arrays \
+     getting-string-length
 
 hello: hello.c
 	mkdir -p bin
@@ -102,6 +103,10 @@ pass-multi-dim-array-to-func: pass-multi-dim-array-to-func.c
 string-variables-as-arrays: string-variables-as-arrays.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g string-variables-as-arrays.c -o bin/string-variables-as-arrays
+
+getting-string-length: getting-string-length.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g getting-string-length.c -o bin/getting-string-length
 
 clean:
 	rm -rf bin

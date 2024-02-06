@@ -3,5 +3,11 @@
 // For a full list of overridable settings, and general information on folder-specific settings,
 // see the documentation: https://docs.zed.dev/configuration/configuring-zed#folder-specific-settings
 {
-  "hard_tabs": true
+  "hard_tabs": true,
+  "language_overrides": {
+    "C": {
+      "format_on_save": "off",
+      "remove_trailing_whitespace_on_save": false
+    }
+  }
 }
