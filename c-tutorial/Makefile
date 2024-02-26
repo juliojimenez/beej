@@ -18,7 +18,8 @@ all: hello \
      changing-arrays-in-functions \
      pass-multi-dim-array-to-func \
      string-variables-as-arrays \
-     getting-string-length
+     getting-string-length \
+     copying-a-string
 
 hello: hello.c
 	mkdir -p bin
@@ -107,6 +108,10 @@ string-variables-as-arrays: string-variables-as-arrays.c
 getting-string-length: getting-string-length.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g getting-string-length.c -o bin/getting-string-length
+
+copying-a-string: copying-a-string.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g copying-a-string.c -o bin/copying-a-string
 
 clean:
 	rm -rf bin
