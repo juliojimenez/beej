@@ -19,7 +19,8 @@ all: hello \
      pass-multi-dim-array-to-func \
      string-variables-as-arrays \
      getting-string-length \
-     copying-a-string
+     copying-a-string \
+	 passing-structs-to-functions
 
 hello: hello.c
 	mkdir -p bin
@@ -112,6 +113,10 @@ getting-string-length: getting-string-length.c
 copying-a-string: copying-a-string.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g copying-a-string.c -o bin/copying-a-string
+
+passing-structs-to-functions: passing-structs-to-functions.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g passing-structs-to-functions.c -o bin/passing-structs-to-functions
 
 clean:
 	rm -rf bin
