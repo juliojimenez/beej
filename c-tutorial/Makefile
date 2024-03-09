@@ -20,7 +20,8 @@ all: hello \
      string-variables-as-arrays \
      getting-string-length \
      copying-a-string \
-	 passing-structs-to-functions
+	 passing-structs-to-functions \
+	 reading-text-files
 
 hello: hello.c
 	mkdir -p bin
@@ -117,6 +118,10 @@ copying-a-string: copying-a-string.c
 passing-structs-to-functions: passing-structs-to-functions.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g passing-structs-to-functions.c -o bin/passing-structs-to-functions
+
+reading-text-files: reading-text-files.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g reading-text-files.c -o bin/reading-text-files
 
 clean:
 	rm -rf bin
