@@ -21,7 +21,8 @@ all: hello \
      getting-string-length \
      copying-a-string \
 	 passing-structs-to-functions \
-	 reading-text-files
+	 reading-text-files \
+	 end-of-file
 
 hello: hello.c
 	mkdir -p bin
@@ -122,6 +123,10 @@ passing-structs-to-functions: passing-structs-to-functions.c
 reading-text-files: reading-text-files.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g reading-text-files.c -o bin/reading-text-files
+
+end-of-file: end-of-file.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g end-of-file.c -o bin/end-of-file
 
 clean:
 	rm -rf bin
