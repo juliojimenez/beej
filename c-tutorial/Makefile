@@ -22,7 +22,8 @@ all: hello \
      copying-a-string \
 	 passing-structs-to-functions \
 	 reading-text-files \
-	 end-of-file
+	 end-of-file \
+	 reading-line-by-line
 
 hello: hello.c
 	mkdir -p bin
@@ -127,6 +128,10 @@ reading-text-files: reading-text-files.c
 end-of-file: end-of-file.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g end-of-file.c -o bin/end-of-file
+
+reading-line-by-line: reading-line-by-line.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g reading-line-by-line.c -o bin/reading-line-by-line
 
 clean:
 	rm -rf bin
