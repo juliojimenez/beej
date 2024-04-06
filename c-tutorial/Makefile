@@ -23,7 +23,8 @@ all: hello \
 	 passing-structs-to-functions \
 	 reading-text-files \
 	 end-of-file \
-	 reading-line-by-line
+	 reading-line-by-line \
+	 formatted-input
 
 hello: hello.c
 	mkdir -p bin
@@ -132,6 +133,10 @@ end-of-file: end-of-file.c
 reading-line-by-line: reading-line-by-line.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g reading-line-by-line.c -o bin/reading-line-by-line
+
+formatted-input: formatted-input.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g formatted-input.c -o bin/formatted-input
 
 clean:
 	rm -rf bin
