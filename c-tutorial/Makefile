@@ -24,7 +24,8 @@ all: hello \
 	 reading-text-files \
 	 end-of-file \
 	 reading-line-by-line \
-	 formatted-input
+	 formatted-input \
+	 writing-text-files
 
 hello: hello.c
 	mkdir -p bin
@@ -137,6 +138,10 @@ reading-line-by-line: reading-line-by-line.c
 formatted-input: formatted-input.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g formatted-input.c -o bin/formatted-input
+
+writing-text-files: writing-text-files.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g writing-text-files.c -o bin/writing-text-files
 
 clean:
 	rm -rf bin
