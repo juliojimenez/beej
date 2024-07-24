@@ -26,7 +26,8 @@ all: hello \
 	 reading-line-by-line \
 	 formatted-input \
 	 writing-text-files \
-	 binary-file-io
+	 binary-file-io \
+	 subtracting-pointers
 
 hello: hello.c
 	mkdir -p bin
@@ -147,6 +148,10 @@ writing-text-files: writing-text-files.c
 binary-file-io: binary-file-io.c
 	mkdir -p bin
 	clang -fcolor-diagnostics -fansi-escape-codes -g binary-file-io.c -o bin/binary-file-io
+
+subtracting-pointers: subtracting-pointers.c
+	mkdir -p bin
+	clang -fcolor-diagnostics -fansi-escape-codes -g subtracting-pointers.c -o bin/subtracting-pointers
 
 clean:
 	rm -rf bin
